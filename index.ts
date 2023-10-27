@@ -1,10 +1,11 @@
 require('dotenv').config();
 import express, { Request, Response } from "express";
+import Route from "./src/utils/consents/Route";
+import { connectDb, sequelize } from "./src/config/db";
 
 // import service routes
 import authRoute from "./src/routes/auth";
-import Route from "./src/utils/consents/Route";
-import { connectDb, sequelize } from "./src/config/db";
+import shipmentRoute from './src/routes/shipment';
 
 // create express app
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // api end points
 app.use(Route.AUTH, authRoute);
+app.use(Route.SHIPMENT, shipmentRoute);
 
 
 // not found apis response

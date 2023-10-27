@@ -5,11 +5,12 @@ import { loginUserValidation,registerUserValidation } from "../utils/validations
 // controllers
 import register from "../controllers/auth/register";
 import login from "../controllers/auth/login";
+import EndPoints from "../utils/consents/endPoints";
 
 const router = express.Router();
 
-router.post("/register", validate(registerUserValidation), register);
+router.post(EndPoints.REGISTER, validate(registerUserValidation), register);
 
-router.post("/login", validate(loginUserValidation), login);
+router.post(EndPoints.LOGIN, validate(loginUserValidation), login);
 
 export default router;

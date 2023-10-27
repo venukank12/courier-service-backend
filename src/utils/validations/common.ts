@@ -1,17 +1,23 @@
 import { query } from "express-validator";
 
-const page = query("page")
+export const page = query("page")
   .if(query("page").exists())
   .notEmpty()
   .withMessage("page can not be null")
   .isInt()
   .withMessage("page should be number");
 
-const pageSize = query("pageSize")
+export const pageSize = query("pageSize")
   .if(query("pageSize").exists())
   .notEmpty()
   .withMessage("page size can not be null")
   .isInt()
   .withMessage("page size should be number");
 
-exports.pagination = [page, pageSize];
+  export const search = query("search")
+  .if(query("search").exists())
+  .notEmpty()
+  .withMessage("search can not be null")
+  .isString()
+  .withMessage("search should be string");
+

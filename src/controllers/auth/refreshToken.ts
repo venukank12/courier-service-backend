@@ -2,22 +2,19 @@ import { Request, Response } from "express";
 import User from "../../models/user";
 import hashPassword from "../../utils/helpers/hashPassword";
 import jwt from "jsonwebtoken";
+import { Op } from "sequelize";
 
-const register = async (req:Request, res:Response) => {
+const refreshToken = async (req:Request, res:Response) => {
   try {
-    const { firstName, lastName, email, password:pwd,address,phoneNumber } = req.body;
+    const user = await User.findByPk(req.user.id);
 
-    const user = await User.findOne({
-      where: { email },
-    });
-
-    if (user) {
-      return res.status(422).json({ message: "email already registered!" });
+    if (!user) {
+      return res
+        .status(422)
+        .json({ message: "we could not refresh your token!" });
     }
 
-    const newUser = await User.create({ firstName, lastName, email, password:hashPassword(pwd),address,phoneNumber });
-
-    const { password, ...restUser } = newUser.dataValues;
+    const { password, ...restUser } = user.dataValues;
     
     const token = jwt.sign(
       {
@@ -30,7 +27,7 @@ const register = async (req:Request, res:Response) => {
     );
 
     return res.status(200).json({
-      message: "register success",
+      message: "new access token generated success",
       token: token,
       user: restUser,
     });
@@ -41,4 +38,4 @@ const register = async (req:Request, res:Response) => {
   }
 };
 
-export default register;
+export default refreshToken;

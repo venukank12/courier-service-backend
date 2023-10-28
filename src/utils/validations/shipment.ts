@@ -19,8 +19,18 @@ const shipmentDetails = [
     .withMessage("shipmentDetails shoule be provided")
     .isObject()
     .withMessage("shipmentDetails should be object"),
-  body("shipmentDetails.type").optional().isString(),
-  body("shipmentDetails.method").optional().isString(),
+  body("shipmentDetails.type")
+    .notEmpty()
+    .withMessage("shipment type shoule be provided")
+    .matches(/\b(?:Standard|Express|International)\b/)
+    .withMessage(
+      "shipment type should be one of Standard or Express or International"
+    ),
+  body("shipmentDetails.method")
+    .notEmpty()
+    .withMessage("shipment method shoule be provided")
+    .matches(/\b(?:Ground|Air|Ocean)\b/)
+    .withMessage("shipment method should be one of Ground or Air or Ocean"),
   body("shipmentDetails.pickupDateAndTime").optional().isString(),
   body("shipmentDetails.pickupLocation").optional().isString(),
   body("shipmentDetails.expectedDeliveryDateAndTime").optional().isString(),
@@ -43,7 +53,7 @@ export const createShipmentValidation = [
   ...shipmentDetails,
 ];
 
-export const updatedShipementValidation = [
+export const updateShipmentValidation = [
   recipientFullName,
   recipientAddress,
   status,
@@ -52,4 +62,4 @@ export const updatedShipementValidation = [
 
 export const changeShipmentStatusValidation = [status];
 
-export const getAllOrSearchShipmentsValidation = [page,search,pageSize];
+export const getAllOrSearchShipmentsValidation = [page, search, pageSize];

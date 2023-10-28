@@ -29,7 +29,7 @@ const getAllOrSearchMyShipments = async (req: Request, res: Response) => {
 
     const data = await Shipment.findAndCountAll({
       where,
-      order: [["createdAt", "DESC"]],
+      order: [["updatedAt", "DESC"]],
       limit: pageSize,
       offset: (page - 1) * pageSize,
     });

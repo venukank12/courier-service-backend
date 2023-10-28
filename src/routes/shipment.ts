@@ -4,12 +4,13 @@ import {
   changeShipmentStatusValidation,
   createShipmentValidation,
   getAllOrSearchShipmentsValidation,
-  updatedShipementValidation,
+  updateShipmentValidation,
 } from "../utils/validations/shipment";
 
 // controllers
 import getAllOrSearchMyShipments from "../controllers/shipment/getAllOrSearchMyShipments";
 import createShipment from "../controllers/shipment/createShipment";
+import updateShipment from "../controllers/shipment/updateShipment";
 import changeStatus from "../controllers/shipment/changeStatus";
 
 // middleware
@@ -33,9 +34,9 @@ router.post(
 
 router.put(
   "/",
-  validate(updatedShipementValidation),
+  validate(updateShipmentValidation),
   authenticate,
-  createShipment
+  updateShipment
 );
 
 router.patch(
